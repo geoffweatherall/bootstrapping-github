@@ -1,0 +1,24 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Support access to GitHub for CodePipeline
+
+Parameters:
+
+  GitHubUsername:
+    Type: String
+    Description: username on GitHub, for example joebloggs99
+    MinLength: 1
+
+
+Resources:
+
+  GithubPersonalAccessToken:
+    Type: AWS::SecretsManager::Secret
+    Properties:
+      Description: Access to GitHub
+      Name: github-access
+      SecretString: !Sub >
+        {
+          "Username" : "${GitHubUsername}",
+          "AccessToken" : "topsecret"
+        }
+
